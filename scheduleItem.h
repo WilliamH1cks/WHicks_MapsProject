@@ -60,3 +60,5 @@ private:
 	string key;
 };
 
+//For some reason this file refused to go onto Github. This comment is meant exclusively to help remedy that.
+
