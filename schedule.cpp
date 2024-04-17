@@ -51,6 +51,7 @@ void schedule::initSchedule()
 		schedMap.insert(newCourse);
 	}
 
+	inFile.close();
 	//print();
 }
 
