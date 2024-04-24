@@ -46,9 +46,9 @@ void schedule::initSchedule()
 
 		scheduleItem course(sub, cat, sect, comp, sess, u, tE, cE, instr);
 		string key = course.getItemKey();
-		pair<string, scheduleItem> newCourse(key, course);
+		//pair<string, scheduleItem> newCourse(key, course);
 		//course.print();
-		schedMap.insert(newCourse);
+		schedTable.insert(key, course);
 	}
 
 	inFile.close();
@@ -61,10 +61,7 @@ void schedule::print()
 		<< "/Comp:" << "/Sess: " << "/Units " << "/Total Enrolled: " <<
 		"/Max Enroll: " << "/Instructor: " << endl;
 	//map<string, schedule>::iterator it;
-	for (auto &mapEntry : schedMap)
-	{
-		mapEntry.second.print();
-	}
+	schedTable.display();
 }
 
 void schedule::findSubject(string sub)
@@ -72,10 +69,17 @@ void schedule::findSubject(string sub)
 	cout << "Subject: " << "/Cat: " << "/Sect: "
 		<< "/Comp:" << "/Sess: " << "/Units " << "/Total Enrolled: " <<
 		"/Max Enroll: " << "/Instructor: " << endl;
-	for (auto& mapEntry : schedMap)
+	//for (auto& mapEntry : schedMap)
+	//{
+	//	if (mapEntry.second.getSubject() == sub)
+	//		mapEntry.second.print();
+	//}
+	for (int hashIndex = 0; hashIndex < schedTable.getSize(); hashIndex++)
 	{
-		if (mapEntry.second.getSubject() == sub)
-			mapEntry.second.print();
+		vector<scheduleItem> tempVect = schedTable.getByIndex(hashIndex);
+		for (int vectIndex = 0; vectIndex < tempVect.size(); vectIndex++)
+			if (tempVect[vectIndex].getSubject() == sub)
+				tempVect[vectIndex].print();
 	}
 }
 
@@ -84,11 +88,19 @@ void schedule::findSubject(string sub, string cat)
 	cout << "Subject: " << "/Cat: " << "/Sect: "
 		<< "/Comp:" << "/Sess: " << "/Units " << "/Total Enrolled: " <<
 		"/Max Enroll: " << "/Instructor: " << endl;
-	for (auto& mapEntry : schedMap)
+	//for (auto& mapEntry : schedMap)
+	//{
+	//	if (mapEntry.second.getSubject() == sub)
+	//		if (mapEntry.second.getCatalog() == cat)
+	//			mapEntry.second.print();
+	//}
+	for (int hashIndex = 0; hashIndex < schedTable.getSize(); hashIndex++)
 	{
-		if (mapEntry.second.getSubject() == sub)
-			if (mapEntry.second.getCatalog() == cat)
-				mapEntry.second.print();
+		vector<scheduleItem> tempVect = schedTable.getByIndex(hashIndex);
+		for (int vectIndex = 0; vectIndex < tempVect.size(); vectIndex++)
+			if (tempVect[vectIndex].getSubject() == sub)
+				if(tempVect[vectIndex].getCatalog() == cat)
+					tempVect[vectIndex].print();
 	}
 }
 
@@ -97,28 +109,37 @@ void schedule::findInstructor(string instr)
 	cout << "Subject: " << "/Cat: " << "/Sect: "
 		<< "/Comp:" << "/Sess: " << "/Units " << "/Total Enrolled: " <<
 		"/Max Enroll: " << "/Instructor: " << endl;
-	for (auto& mapEntry : schedMap)
+	for (int hashIndex = 0; hashIndex < schedTable.getSize(); hashIndex++)
 	{
-		string name = mapEntry.second.getInstructor();
-		char* namePtr = new char[name.length() + 1];
-		strcpy_s(namePtr, name.length() + 1, name.c_str());
-
-		int index = 0;
-		string lastName = "";
-		while (index < sizeof(namePtr))
+		vector<scheduleItem> tempVect = schedTable.getByIndex(hashIndex);
+		for (int vectIndex = 0; vectIndex < tempVect.size(); vectIndex++)
 		{
-			char currentChar = namePtr[index];
-			if (currentChar != ',')
-			{
-				lastName += currentChar;
-				index++;
-			}
-			else
-				index = sizeof(namePtr);
-		}
-		//cout << lastName << " Test" << endl;
+			string name = tempVect[vectIndex].getInstructor();
+			char* namePtr = new char[name.length() + 1];
+			strcpy_s(namePtr, name.length() + 1, name.c_str());
 
-		if (lastName == instr)
-			mapEntry.second.print();
+			int index = 0;
+			string lastName = "";
+			while (index < sizeof(namePtr))
+			{
+				char currentChar = namePtr[index];
+				if (currentChar != ',')
+				{
+					lastName += currentChar;
+					index++;
+				}
+				else
+					index = sizeof(namePtr);
+			}
+			//cout << lastName << " Test" << endl;
+
+			if (lastName == instr)
+				tempVect[vectIndex].print();
+		}
 	}
+}
+
+void schedule::setHashFunction(std::function<size_t(const string&)> hashFunc)
+{
+	//Next time
 }
