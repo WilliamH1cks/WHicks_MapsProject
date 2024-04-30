@@ -4,6 +4,8 @@
 #include <list>
 #include <vector>
 
+using namespace::std;
+
 // Hash table class using separate chaining
 template <typename K, typename V> class HashTable {
 private:
@@ -146,21 +148,33 @@ public:
   // Calculates and returns the number collisions 
   int countCollisions() const {
     int collisionCount = 0;
+    int numBucketsCounted = 0;
+    //cout << size << endl;
     for (int hashIndex = 0; hashIndex < size - 1; hashIndex++)
     {
-        if (table[hashIndex].size() > 1)
-            collisionCount++;
+        if(!table[hashIndex].empty())
+        {
+            if (table[hashIndex].size() > 1)
+                collisionCount++;
+            numBucketsCounted++;
+            if (numBucketsCounted == getBuckets())
+                return collisionCount;
+        }
     }
-    return collisionCount;
+    //return collisionCount;
   }
 
   // Finds and returns the size of the bucket with the longest chain
   int maxBucketSize() const {
     int largestBucket = 0;
+    int numBucketsCounted = 0;
     for (int hashIndex = 0; hashIndex < size - 1; hashIndex++)
     {
         if (table[hashIndex].size() > largestBucket)
             largestBucket = table[hashIndex].size();
+        numBucketsCounted++;
+        if (numBucketsCounted == getBuckets())
+            return largestBucket;
     }
     return largestBucket;
   }

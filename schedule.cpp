@@ -61,7 +61,12 @@ void schedule::print()
 		<< "/Comp:" << "/Sess: " << "/Units " << "/Total Enrolled: " <<
 		"/Max Enroll: " << "/Instructor: " << endl;
 	//map<string, schedule>::iterator it;
-	schedTable.display();
+	for (int hashIndex = 0; hashIndex < schedTable.getSize(); hashIndex++)
+	{
+		vector<scheduleItem> tempVect = schedTable.getByIndex(hashIndex);
+		for (int vectIndex = 0; vectIndex < tempVect.size(); vectIndex++)
+			tempVect[vectIndex].print();
+	}
 }
 
 void schedule::findSubject(string sub)
@@ -141,5 +146,27 @@ void schedule::findInstructor(string instr)
 
 void schedule::setHashFunction(std::function<size_t(const string&)> hashFunc)
 {
-	//Next time
+	schedTable.setHashFunction(hashFunc);
+	return;
+}
+
+void schedule::statistics()
+{
+	cout << "Stats:" << endl;
+	cout << "Size of hash table: " << schedTable.getSize() << endl;
+	cout << "Number of buckets: " << schedTable.getBuckets() << endl;
+	cout << "Load factor: " << schedTable.getLoadFactor() << endl;
+	cout << "Number of collisions: " << schedTable.countCollisions() << endl;
+	cout << "Length of longest chain: " << schedTable.maxBucketSize() << endl;
+	return;
+}
+
+int schedule::getSize()
+{
+	return schedTable.getSize();
+}
+
+vector<scheduleItem> schedule::getBucket(int index)
+{
+	return schedTable.getByIndex(index);
 }

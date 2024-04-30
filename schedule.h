@@ -31,6 +31,17 @@ public:
 	//	- Length of longest chain
 	void statistics();
 
+	//Fetches the size of the schedule's hash table
+	int getSize();
+
+	//Fetches a bucket in the hash table
+	vector<scheduleItem> getBucket(int index);
+
+	//Schedule Consrtuctor
+	schedule(int size) : schedTable(size)
+	{
+	};
+
 private:
 	//map<string, scheduleItem> schedMap;
 	HashTable<string, scheduleItem> schedTable;
