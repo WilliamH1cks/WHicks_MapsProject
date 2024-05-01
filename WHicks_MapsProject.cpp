@@ -20,21 +20,25 @@ int findHashIndex(string sub, string cat, string sect, schedule newSched)
 
 int main()
 {
-    schedule newSched(63);
+    schedule newSched(173);
     newSched.initSchedule();
+
+    newSched.statistics();
 
     int input = 0;
 
     while (input < 6)
     {
-        cout << endl << "Welcome to Main Menu Mode. May I take your order?" << endl;
+        cout << "-------------------------------------------------" << endl;
+        cout << "Welcome to Main Menu Mode. May I take your order?" << endl;
+        cout << "-------------------------------------------------" << endl;
         cout << "1 : Search by subject" << endl;
         cout << "2 : Search by subject AND catalog" << endl;
         cout << "3 : Search by last name of instructor" << endl;
         cout << "4 : Print every course" << endl;
         cout << "5 : Print statistics" << endl;
         cout << "6 : Print the bucket number, given a key" << endl;
-        cout << "7 or more : Get out" << endl;
+        cout << "7+: Get out of this program" << endl << endl;
         cin >> input;
 
         if (input == 1 || input == 2)
@@ -81,7 +85,10 @@ int main()
             cout << "What is the Section Number? (It may include uppercase letters) ";
             cin >> sect;
             int hashIndex = findHashIndex(sub, cat, sect, newSched);
-            cout << "Key found in Bucket " << hashIndex << endl;
+            if (hashIndex >= 0)
+                cout << "Key found in Bucket " << hashIndex << endl;
+            else
+                cout << "Key not found." << endl;
         }
         else
         {

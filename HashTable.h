@@ -148,33 +148,27 @@ public:
   // Calculates and returns the number collisions 
   int countCollisions() const {
     int collisionCount = 0;
-    int numBucketsCounted = 0;
-    //cout << size << endl;
-    for (int hashIndex = 0; hashIndex < size - 1; hashIndex++)
+    cout << "Table Size: " << size << endl;
+    for (int hashIndex = 0; hashIndex < getBuckets(); hashIndex++)
     {
+        //cout << "Size of Bucket " << hashIndex + 1 << ": " << table[hashIndex].size() << endl;
         if(!table[hashIndex].empty())
         {
             if (table[hashIndex].size() > 1)
                 collisionCount++;
-            numBucketsCounted++;
-            if (numBucketsCounted == getBuckets())
-                return collisionCount;
         }
     }
-    //return collisionCount;
+    cout << "Actual # of collisions: " << collisionCount << endl;
+    return collisionCount;
   }
 
   // Finds and returns the size of the bucket with the longest chain
   int maxBucketSize() const {
     int largestBucket = 0;
-    int numBucketsCounted = 0;
-    for (int hashIndex = 0; hashIndex < size - 1; hashIndex++)
+    for (int hashIndex = 0; hashIndex < getBuckets(); hashIndex++)
     {
         if (table[hashIndex].size() > largestBucket)
             largestBucket = table[hashIndex].size();
-        numBucketsCounted++;
-        if (numBucketsCounted == getBuckets())
-            return largestBucket;
     }
     return largestBucket;
   }
