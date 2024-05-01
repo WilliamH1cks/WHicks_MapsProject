@@ -32,7 +32,7 @@ void schedule::initSchedule()
 		getline(inFile, tEString, ',');
 		getline(inFile, cEString, ',');
 		getline(inFile, trash, ','); //acadOrg is not needed
-		getline(inFile, trash, '"'); //removing teh quotes from the instructor names
+		getline(inFile, trash, '"'); //removing the quotes from the instructor names
 		getline(inFile, instr, '"');
 		//cout << instr << endl;
 		getline(inFile, trash);
@@ -45,13 +45,15 @@ void schedule::initSchedule()
 		cE = stoi(cEString);
 
 		scheduleItem course(sub, cat, sect, comp, sess, u, tE, cE, instr);
-		string key = course.getItemKey();
+		//course.setItemKey();
+		string key = getItemKey(course);
 		//pair<string, scheduleItem> newCourse(key, course);
 		//course.print();
 		schedTable.insert(key, course);
 	}
 
 	inFile.close();
+	//schedTable.display();
 	//print();
 }
 
@@ -66,6 +68,7 @@ void schedule::print()
 		vector<scheduleItem> tempVect = schedTable.getByIndex(hashIndex);
 		for (int vectIndex = 0; vectIndex < tempVect.size(); vectIndex++)
 			tempVect[vectIndex].print();
+		cout << endl;
 	}
 }
 
@@ -166,7 +169,7 @@ int schedule::getSize()
 	return schedTable.getSize();
 }
 
-vector<scheduleItem> schedule::getBucket(int index)
+string schedule::getItemKey(scheduleItem item)
 {
-	return schedTable.getByIndex(index);
+	return item.getItemKey();
 }

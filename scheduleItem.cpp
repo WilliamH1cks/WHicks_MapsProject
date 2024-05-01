@@ -2,23 +2,23 @@
 #include <iostream>
 using namespace std;
 
-void scheduleItem::setItemKey()
+string scheduleItem::getItemKey()
 {
-	key = subject + "_" + catalog + "_" + section;
-	return;
+	string key = subject + "_" + catalog + "_" + section;
+	return key;
 }
 
 bool scheduleItem::operator==(scheduleItem right)
 {
-	return (key == right.key);
+	return (getItemKey() == right.getItemKey());
 }
 bool scheduleItem::operator!=(scheduleItem right)
 {
-	return (key != right.key);
+	return (getItemKey() != right.getItemKey());
 }
 bool scheduleItem::operator>=(scheduleItem right)
 {
-	return (key >= right.key);
+	return (getItemKey() >= right.getItemKey());
 }
 
 void scheduleItem::print()

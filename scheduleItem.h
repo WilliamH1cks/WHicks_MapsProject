@@ -17,10 +17,7 @@ public:
 	string getInstructor() { return instructor; }
 
 	//Create key
-	void setItemKey();
-
-	//Fetch key
-	string getItemKey() { return key; }
+	string getItemKey();
 	
 	//Overloaded ==, !=, and >= operators
 	bool operator==(scheduleItem right);
@@ -42,8 +39,6 @@ public:
 		totEnrl = tE;
 		capEnrl = cE;
 		instructor = instr;
-
-		setItemKey();
 	}
 
 private:
@@ -57,7 +52,7 @@ private:
 	int capEnrl;
 	string instructor;
 	
-	string key;
+	//string key;
 };
 
 //For some reason this file refused to go onto Github. This comment is meant exclusively to help remedy that.

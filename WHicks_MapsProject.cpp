@@ -5,25 +5,36 @@
 #include "schedule.h"
 using namespace std;
 
-int findHashIndex(string sub, string cat, string sect, schedule newSched)
+size_t schedHash(string key)
 {
-    string searchKey = sub + "_" + cat + "_" + sect;
-    for (int hashIndex = 0; hashIndex < newSched.getSize(); hashIndex++)
-    {
-        vector<scheduleItem> tempVect = newSched.getBucket(hashIndex);
-        if(tempVect.size() != 0)
-            if (tempVect[0].getItemKey() == searchKey)
-                return hashIndex;
-    }
-    return -1;
+    unsigned int hashVal = 0;
+
+    //Provided Funct. 1:
+    //for (char ch : key)
+    //    hashVal += ch;
+
+    //Provided Funct. 2:
+    //hashVal = key[0] + 27 * key[1] + 729 * key[2];
+
+    //Provided Funct. 3
+    //for (char ch : key)
+    //    hashVal = 37 * hashVal + ch;
+    // ** is unsigned
+
+    //Custom function:
+    for (int keyI = 0; keyI < 3; keyI++)
+        for (char ch : key)
+            hashVal = 37 * hashVal + 27 * key[keyI] + 270 * key[keyI + 4] + 9990 * key[keyI + 8] + ch;
+
+    return hashVal;
 }
 
 int main()
 {
-    schedule newSched(173);
+    schedule newSched(179);
+    newSched.setHashFunction(schedHash);
     newSched.initSchedule();
-
-    newSched.statistics();
+    //newSched.statistics();
 
     int input = 0;
 
@@ -84,7 +95,9 @@ int main()
             string sect = "";
             cout << "What is the Section Number? (It may include uppercase letters) ";
             cin >> sect;
-            int hashIndex = findHashIndex(sub, cat, sect, newSched);
+            string searchKey = sub + "_" + cat + "_" + sect;
+            int hashVal = schedHash(searchKey);
+            int hashIndex = hashVal % newSched.getSize();
             if (hashIndex >= 0)
                 cout << "Key found in Bucket " << hashIndex << endl;
             else

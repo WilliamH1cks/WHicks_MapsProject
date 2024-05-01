@@ -141,7 +141,7 @@ public:
   // Returns the load factor for the table
   double getLoadFactor() const {
     double loadFactor = 0;
-    loadFactor = size / buckets;
+    loadFactor = (size * 1.0) / (buckets * 1.0);
     return loadFactor;
   }
 
@@ -155,10 +155,10 @@ public:
         if(!table[hashIndex].empty())
         {
             if (table[hashIndex].size() > 1)
-                collisionCount++;
+                collisionCount += table[hashIndex].size();
         }
     }
-    cout << "Actual # of collisions: " << collisionCount << endl;
+    //cout << "Actual # of collisions: " << collisionCount << endl;
     return collisionCount;
   }
 

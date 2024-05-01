@@ -34,8 +34,8 @@ public:
 	//Fetches the size of the schedule's hash table
 	int getSize();
 
-	//Fetches a bucket in the hash table
-	vector<scheduleItem> getBucket(int index);
+	//Fetches the key of a certain item
+	string getItemKey(scheduleItem);
 
 	//Schedule Consrtuctor
 	schedule(int size) : schedTable(size)
