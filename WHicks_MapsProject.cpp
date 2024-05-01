@@ -5,9 +5,10 @@
 #include "schedule.h"
 using namespace std;
 
+//Hash function, activated when given a key
 size_t schedHash(string key)
 {
-    unsigned int hashVal = 0;
+    int hashVal = 0;
 
     //Provided Funct. 1:
     //for (char ch : key)
@@ -29,6 +30,7 @@ size_t schedHash(string key)
     return hashVal;
 }
 
+//Main function
 int main()
 {
     schedule newSched(179);
